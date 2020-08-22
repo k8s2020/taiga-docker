@@ -23,7 +23,8 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 10Gi
+  storageClassName: staticdata
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -36,15 +37,20 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 10Gi
+  storageClassName: taigamediadata
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: taiga-web
 spec:
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: taiga
+      tier: web
   template:
     metadata:
       labels:

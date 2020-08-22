@@ -24,9 +24,10 @@ spec:
     - ReadWriteOnce
   resources:
     requests:
-      storage: 2Gi
+      storage: 10Gi
+  storageClassName: postgresdata
 ---
-apiVersion: extensions/v1beta1
+apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: postgres
@@ -36,6 +37,10 @@ metadata:
 spec:
   strategy:
     type: Recreate
+  selector:
+    matchLabels:
+      app: taiga
+      tier: postgres
   template:
     metadata:
       labels:
@@ -50,6 +55,8 @@ spec:
         imagePullPolicy: IfNotPresent
         env:
         - name: POSTGRES_USER
+          value: taiga
+        - name: POSTGRES_PASSWORD
           value: taiga
         - name: POSTGRES_DB
           value: taiga
