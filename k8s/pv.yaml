@@ -1,0 +1,45 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: taigapostgres-pv #pv名称
+spec:
+  capacity:              #存储能力，一个pv对象都要指定一个存储能力，目前仅支持存储空间的设置
+    storage: 10Gi        #存储空间
+  accessModes:
+  - ReadWriteOnce        #访问模式
+  persistentVolumeReclaimPolicy: Retain  #回收策略(Retain（保留）, Recycle（回收）, Delete（删除）)
+  storageClassName: postgresdata
+  nfs:                              #服务模式 (nfs、ceph、hostpath等)
+    path: /data/nfs/taiga/postgres  #共享数据目录挂载点
+    server: 192.168.1.168           #nfs服务器地址
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: taigastatic-pv #pv名称
+spec:
+  capacity:              #存储能力，一个pv对象都要指定一个存储能力，目前仅支持存储空间的设置
+    storage: 10Gi        #存储空间
+  accessModes:
+  - ReadWriteOnce        #访问模式
+  persistentVolumeReclaimPolicy: Retain  #回收策略(Retain（保留）, Recycle（回收）, Delete（删除）)
+  storageClassName: staticdata
+  nfs:                              #服务模式 (nfs、ceph、hostpath等)
+    path: /data/nfs/taiga/static  #共享数据目录挂载点
+    server: 192.168.1.168           #nfs服务器地址
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: taigamedia-pv #pv名称
+spec:
+  capacity:              #存储能力，一个pv对象都要指定一个存储能力，目前仅支持存储空间的设置
+    storage: 10Gi        #存储空间
+  accessModes:
+  - ReadWriteOnce        #访问模式
+  persistentVolumeReclaimPolicy: Retain  #回收策略(Retain（保留）, Recycle（回收）, Delete（删除）)
+  storageClassName: taigamediadata
+  nfs:                              #服务模式 (nfs、ceph、hostpath等)
+    path: /data/nfs/taiga/taigamedia  #共享数据目录挂载点
+    server: 192.168.1.168           #nfs服务器地址
